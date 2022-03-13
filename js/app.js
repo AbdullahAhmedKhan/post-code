@@ -2,9 +2,9 @@
 
 const viewPostCode = () => {
   const search = document.getElementById('search');
-  const searchValue=search.value;
-  warning.style.display="none";
-  if(searchValue==''){
+  const searchValue = search.value;
+  warning.style.display = "none";
+  if (searchValue == '') {
     Swal.fire({
       icon: 'error',
       title: 'Oops...',
@@ -13,25 +13,25 @@ const viewPostCode = () => {
     })
   }
   url = `https://api.zippopotam.us/bd/${searchValue}`;
-  
+
   fetch(url)
     .then(res => res.json())
     .then(data => showData(data));
-   // clear
-   search.value='';
-   parent.innerHTML = "";
+  // clear
+  search.value = '';
+  parent.innerHTML = "";
 }
 const parent = document.getElementById('parent');
-const warning=document.getElementById('warning');
+const warning = document.getElementById('warning');
 const showData = (data) => {
- 
-  if(Object.keys(data).length === 0){
-    warning.style.display="block";
+
+  if (Object.keys(data).length === 0) {
+    warning.style.display = "block";
   }
-  else{
-    
+  else {
+
     const div = document.createElement('div');
-  div.innerHTML = `
+    div.innerHTML = `
     <div class="card mb-3 mx-auto py-2 glass text-color" style="max-width: 24rem;">
   <div class="card-header"><h2 class="text-center p-1">${data.country}<h2></div>
   <div class="card-body ps-3">
@@ -41,6 +41,13 @@ const showData = (data) => {
   </div>
 </div>
     `;
-  parent.appendChild(div);
+    parent.appendChild(div);
   }
 }
+document.getElementById("search")
+  .addEventListener("keyup", function (event) {
+    event.preventDefault();
+    if (event.key === 'Enter') {
+      document.getElementById("search-btn").click();
+    }
+  });
